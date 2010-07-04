@@ -1,0 +1,63 @@
+using System;
+#if($type.hasMany())
+using Iesi.Collections.Generic;
+#end
+
+namespace ${target.namespace};
+{
+#if(${util.isBlank(${type.getGeneralization()})})
+    public interface I${type.name}Base : IValidatable {
+#else
+    public interface I${type.name}Base : I${type.generalization}, IValidatable {
+#end
+
+#foreach($property in $type.properties)
+        $property.type $property.name
+        {
+            get;
+            set;
+        }
+#end
+
+#foreach($ass in ${type.getOneToMany()})
+#if(${ass.isOwner()})
+        ISet<${ass.entity}> ${ass.name}s
+        {
+            get;
+            set;
+        }
+#else
+        ${ass.entity} ${ass.name}
+        {
+            get;
+            set;
+        }
+#end
+#end
+
+#foreach($ass in ${type.getManyToOne()})
+        ${ass.entity} ${ass.name};
+        {
+            get;
+            set;
+        }
+#end
+
+#foreach($ass in ${type.getManyToMany()})
+        ISet<${ass.entity}> ${ass.name}s
+        {
+            get;
+            set;
+        }
+#end
+
+#foreach($ass in ${type.getOneToOne()})
+        ${ass.entity} ${ass.name}
+        {
+            get;
+            set;
+        }
+#end
+    }
+
+}

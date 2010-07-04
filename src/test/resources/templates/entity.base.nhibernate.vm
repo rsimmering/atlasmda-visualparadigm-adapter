@@ -1,0 +1,111 @@
+using System;
+using Hyperion.Model.Api.Validation;
+using NHibernate.Mapping.Attributes;
+#if(${util.hasBooleanPropertyTag(${type},"encrypted")})
+using Hyperion.Utility.Security;
+#end
+#if($type.hasMany())
+using Iesi.Collections.Generic;
+#end
+
+namespace ${target.namespace};
+{
+#if(${util.isBlank(${type.getGeneralization()})})
+    [Class(Table = "${util.upperCase(${type.name})}", ProxyType = typeof(I${type.name})]
+    public class ${type.name}Base : I${type.name}, IValidatable {
+#else
+    [JoinedSubclass(0, Table = "${util.upperCase(${type.name})}", ExtendsType = typeof(${type.generalization}), ProxyType = typeof(I${type.name}))]
+    [Key(1, Column = "${util.upperCase(${type.generalization})}_ID")]
+    public abstract class ${type.name}Base : ${type.generalization}, I${type.name}, IValidatable {
+#end
+
+#foreach($property in $type.properties)
+
+        protected $property.type $property.name#if(${util.equals("yes",${property.getTaggedValue("encrypted")})})Encrypted;#end
+#end
+
+#foreach($ass in ${type.getOneToMany()})
+#if(${ass.isOwner()})
+        protected ISet<${ass.entity}> ${ass.name}s;
+#else
+        protected ${ass.entity} ${ass.name};
+#end
+#end
+#foreach($ass in ${type.getManyToOne()})
+        protected ${ass.entity} ${ass.name};
+#end
+#foreach($ass in ${type.getManyToMany()})
+        protected ISet<${ass.entity}> ${ass.name}s;
+#end
+#foreach($ass in ${type.getOneToOne()})
+        protected ${ass.entity} ${ass.name};
+#end
+
+#foreach($property in $type.properties)
+#if(${util.equals("yes",${property.getTaggedValue("encrypted")})})
+
+        [Property(Column = "${util.upperCase(${property.name})}", Name = "${property.name}Encrypted", TypeType = typeof(${property.type}), Access = "field"#if(${util.equals("yes",${property.getTaggedValue("unique")})}), Unique = true#end#if(${util.equals("yes",${property.getTaggedValue("required")})}), NotNull = true#end#if(!${util.isBlank(${property.getTaggedValue("length")})}), Length = ${property.getTaggedValue("length")}#end)]
+        public virtual string ${util.capitalize(${property.name})}
+        {
+            get
+            {
+                if (${property.name}Encrypted != null)
+                {
+                    return CipherUtil.Decrypt(${property.name}Encrypted, KeyStruct.Create().decryptionKey);
+                }
+                return null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    ${property.name}Encrypted = CipherUtil.Encrypt(value, KeyStruct.Create().decryptionKey);
+                }
+                else
+                {
+                    ${property.name}Encrypted = null;
+                }
+            }
+        }
+
+        public virtual $property.type ${util.capitalize(${property.name})}CipherText
+        {
+            get { return ${property.name}Encrypted; }
+        }
+#else
+
+        [Property(Column = "${util.upperCase(${property.name})}"#if(${util.equals("yes",${property.getTaggedValue("unique")})}), Unique = true#end#if(${util.equals("yes",${property.getTaggedValue("required")})}), NotNull = true#end#if(!${util.isBlank(${property.getTaggedValue("length")})}), Length = ${property.getTaggedValue("length")}#end)]
+        public virtual string ${util.capitalize(${property.name})}
+        {
+            get { return ${property.name}; }
+            set { ${property.name} = value; }
+        }
+#end
+#end
+
+#parse("includes/entity.one.to.many.vm")
+
+        public virtual ISet<Problem> Validate()
+        {
+            ISet<Problem> problems = new HashedSet<Problem>();
+
+#foreach($property in $type.properties)
+#if(${util.equals("yes",${property.getTaggedValue("required")})})
+            if(string.IsNullOrEmpty(${property.name}))
+            {
+                problems.Add(ProblemHelper.CreateProblemWithMessage("${property.name} cannot be empty.", ProblemSeverityEnum.Error, GetType()));
+            }
+#end
+#end
+#foreach($property in $type.properties)
+#if(!${util.isBlank(${property.getTaggedValue("length")})})
+            if(${property.name}.Length != null && ${property.name}.Length > ${property.getTaggedValue("length")})
+            {
+                problems.Add(ProblemHelper.CreateProblemWithMessage("${property.name} is longer than its maximum length of ${property.getTaggedValue("length")}", ProblemSeverityEnum.Error, GetType()));
+            }
+#end
+#end
+            return problems;
+        }
+    }
+}

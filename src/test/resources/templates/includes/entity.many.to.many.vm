@@ -1,0 +1,38 @@
+#foreach($ass in ${type.getManyToMany()})
+
+    /**
+     * Get the ${ass.name}List of the ${type.name}
+     * @return ${ass.name}List
+     * @see List
+     * @see ${ass.entity}
+     */
+#if(${ass.isOwner()})
+    @ManyToMany(mappedBy="${ass.role}List")
+#end
+    public List<${ass.entity}> get${util.capitalize(${ass.name})}List() {
+        if(${ass.name}List == null) {
+            ${ass.name}List = new ArrayList<${ass.entity}>();
+        }
+        return ${ass.name}List;
+    }
+
+    /**
+     * Set the ${ass.name}List of the ${type.name}
+     * @param ${ass.name}List The ${ass.name} list
+     * @see List
+     * @see ${ass.entity}
+     */
+    public void set${util.capitalize(${ass.name})}List(List<${ass.entity}> ${ass.name}List) {
+        this.${ass.name}List = ${ass.name}List;
+    }
+
+
+    /**
+     * Add a ${ass.entity} to the ${ass.name}List of the ${type.name}
+     * @param ${util.uncapitalize(${ass.entity})} The ${ass.entity} to add
+     * @see ${ass.entity}
+     */
+    public void add${util.capitalize(${ass.name})}(${ass.entity} ${util.uncapitalize(${ass.entity})}) {
+        get${util.capitalize(${ass.name})}List().add(${util.uncapitalize(${ass.entity})});
+    }
+#end

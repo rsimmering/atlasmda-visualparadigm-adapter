@@ -1,0 +1,8 @@
+<primitives>
+    <primitive pim="string" psm="string"/>
+    <primitive pim="date" psm="DateTime"/>
+    <primitive pim="boolean" psm="bool"/>
+    <primitive pim="int" psm="Integer"/>
+    <primitive pim="long" psm="Long"/>
+    <primitive pim="Map" psm="java.util.Map"/>
+</primitives>

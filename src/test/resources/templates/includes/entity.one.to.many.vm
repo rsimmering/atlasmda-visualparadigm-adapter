@@ -1,0 +1,19 @@
+#foreach($ass in ${type.getOneToMany()})
+#if(${ass.isOwner()})
+	[Set(0, Name = "${util.upperCase(${ass.name})}s", Generic = true, Inverse = false")]
+	[Key(1, Column = "${util.upperCase(${ass.role})}_ID")]
+	[OneToMany(2, ClassType = typeof(${ass.entity}))]
+	public virtual ISet<${ass.entity}> ${util.capitalize(${ass.name})}s
+	{
+	    get { return ${ass.name}s; }
+	    set { ${ass.name}s = value; }
+	}        
+#else
+	[ManyToOne(Column = "${util.upperCase(${ass.entity})}_ID", ClassType = typeof(${ass.entity}))]
+        public virtual ${ass.entity} ${util.capitalize(${ass.name})}
+        {
+            get { return ${ass.name}; }
+            set { ${ass.name} = value; }
+        }
+#end
+#end

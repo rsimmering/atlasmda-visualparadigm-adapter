@@ -1,0 +1,13 @@
+<context>
+    <inputs>
+        <model file="src/test/resources/project.xml" adapter="org.atlas.model.adapter.visualparadigm.ModelAdapter"/>
+        <templates dir="src/test/resources/templates" />
+        <utility name="util" impl="org.atlas.utils.AtlasStringUtils"/>
+    </inputs>
+    <outputs>
+        <output name="generated.source.root" dir="target/generated-sources/java"/>
+        <output name="main.source.root" dir="target/generated-sources/java"/>
+        <output name="generated.resource.root" dir="target/generated-sources/resources"/>
+        <output name="main.resource.root" dir="target/generated-sources/resources"/>
+    </outputs>
+</context>

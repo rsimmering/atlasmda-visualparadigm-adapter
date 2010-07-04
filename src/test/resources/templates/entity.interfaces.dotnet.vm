@@ -1,0 +1,11 @@
+using System;
+#if($type.hasMany())
+using Iesi.Collections.Generic;
+#end
+
+namespace ${target.namespace};
+{
+    public interface I${type.name} : I${type.name}Base {
+
+    }
+}

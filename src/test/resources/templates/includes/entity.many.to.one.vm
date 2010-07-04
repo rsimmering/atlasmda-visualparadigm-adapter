@@ -1,0 +1,22 @@
+#foreach($ass in ${type.getManyToOne()})
+
+    /**
+     * Get the ${ass.name} of the ${type.name}
+     * @return ${ass.name}
+     * @see ${ass.entity}
+     */
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="${util.upperCase(${ass.entity})}_ID")
+    public ${ass.entity} get${util.capitalize(${ass.name})}() {
+        return ${ass.name};
+    }
+
+    /**
+     * Set the ${ass.name} of the ${type.name}
+     * @param ${ass.name} The ${ass.name}
+     * @see ${ass.entity}
+     */
+    public void set${util.capitalize(${ass.name})}(${ass.entity} ${ass.name}) {
+        this.${ass.name} = ${ass.name};
+    }
+#end

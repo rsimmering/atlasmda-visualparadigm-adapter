@@ -1,0 +1,51 @@
+<targets>
+    <target name="entity.interfaces.impl.base"
+            stereotype="entity"
+            template="entity.base.interfaces.dotnet.vm"
+            outputFile="I${name}.Base.cs"
+            namespace="Org.Atlas.School.Api.Domain"
+            outputPath="${generated.resource.root}/Api/Domain/${type.namespace}"
+            overwrite="true"/>
+
+    <target name="entity.interfaces.impl"
+            stereotype="entity"
+            template="entity.interfaces.dotnet.vm"
+            outputFile="I${name}.cs"
+            namespace="Org.Atlas.School.Api.Domain"
+            outputPath="${generated.resource.root}/Api/Domain/${type.namespace}"
+            overwrite="false"/>
+
+    <target name="entity.base.nhibernate"
+            stereotype="entity"
+            template="entity.base.nhibernate.vm"
+            outputFile="${name}.Base.cs"
+            namespace="Org.Atlas.School.Domain"
+            outputPath="${generated.resource.root}/Domain/${type.namespace}"
+            overwrite="true"/>
+
+    <target name="entity.impl"
+            stereotype="entity"
+            template="entity.dotnet.vm"
+            outputFile="${name}.cs"
+            namespace="Org.Atlas.School.Domain"
+            outputPath="${generated.resource.root}/Domain/${type.namespace}"
+            overwrite="false"/>
+
+   <target name="spring.context.dao"
+            stereotype="entity"
+            collection="true"
+            template="spring.context.dao.vm"
+            outputFile="spring-context-dao.xml"
+            namespace="Conf"
+            outputPath="${generated.resource.root}/conf"
+            overwrite="true"/>
+
+   <target name="spring.context.service"
+            stereotype="control"
+            collection="true"
+            template="spring.context.services.vm"
+            outputFile="spring-context-services.xml"
+            namespace="Conf"
+            outputPath="${generated.resource.root}/conf"
+            overwrite="true"/>
+</targets>
