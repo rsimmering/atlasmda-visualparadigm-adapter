@@ -121,11 +121,6 @@ public class ModelAdapter implements Adapter {
                 if(packageNames.size() > 0){
                     processPackages(0, ap, vn);
                 }
-                
-                Logger.getLogger(ModelAdapter.class.getName()).log(Level.INFO, "Found " + stereotypes.size() + " Stereotypes");
-                Logger.getLogger(ModelAdapter.class.getName()).log(Level.INFO, "Found " + datatypes.size() + " datatypes");
-                Logger.getLogger(ModelAdapter.class.getName()).log(Level.INFO, "Found " + classes.size() + " classes");
-                Logger.getLogger(ModelAdapter.class.getName()).log(Level.INFO, "Found " + packageNames.size() + " packages");
 
                 //Process Associations
                 ap.resetXPath();
@@ -718,7 +713,6 @@ public class ModelAdapter implements Adapter {
         for (String tagName : e.getTags().keySet()) {
            
             Tag tag = new Tag(tagName, e.getTags().get(tagName));
-            System.out.println("Read read Tag:" + tagName + " with Value: "+e.getTags().get(tagName) + " on Element "+element.getName());
             element.addTag(tag);
         }
     }
