@@ -20,6 +20,7 @@
             <id>atlas-snapshots</id>
             <name>Snapshots</name>
             <url>http://www.atlas-mda.org/repo/content/repositories/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
           </snapshotRepository>
     </distributionManagement>
     <repositories>

@@ -157,7 +157,7 @@ public class ModelAdapter implements Adapter {
         vn.toElement(VTDNav.NEXT_SIBLING); // Move to <ChildModels>
         vn.push();
         vn.toElement(VTDNav.FIRST_CHILD); // Move to <Model> for attribute
-        parseClassAttributes(clazz, vn); // Parse Attribute
+        //parseClassAttributes(clazz, vn); // Parse Attribute
         String modelType = vn.toNormalizedString((vn.getAttrVal("modelType") != -1) ? vn.getAttrVal("modelType") : 0);
         if ("Attribute".equals(modelType)) {
             parseClassAttributes(clazz, vn);
@@ -220,7 +220,7 @@ public class ModelAdapter implements Adapter {
 
             vn.pop();
         }
-        
+
         vn.pop();
         clazz.addOperation(operation);
     }
@@ -421,7 +421,7 @@ public class ModelAdapter implements Adapter {
 
     public void parseAssociations(VTDNav vn) throws NavException {
         VpAssociation a = new VpAssociation();
-        
+
         vn.push();
         vn.toElement(VTDNav.FIRST_CHILD); //Move to <ModelProperties>
         vn.push();
@@ -652,7 +652,7 @@ public class ModelAdapter implements Adapter {
         en.setName(e.getName());
         en.setNamespace(e.getNamespace());
         addTags(e, en);
-        
+
         for (VpAttribute a : e.getAttributes()) {
             Literal literal = new Literal();
             literal.setName(a.getName());
@@ -673,7 +673,7 @@ public class ModelAdapter implements Adapter {
             Operation o = new Operation();
             o.setName(eo.getName());
             addTags(eo, o);
-            
+
             String returnType = resolveType(eo.getReturnType());
             o.setReturnType(returnType);
             o.setReturnMany((eo.getReturnMany().equals("[]") || eo.getReturnMany().equals("*") ? true : false));
@@ -711,7 +711,7 @@ public class ModelAdapter implements Adapter {
     private void addTags(VpElement e, Element element){
 
         for (String tagName : e.getTags().keySet()) {
-           
+
             Tag tag = new Tag(tagName, e.getTags().get(tagName));
             element.addTag(tag);
         }
