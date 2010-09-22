@@ -6,7 +6,7 @@
     <groupId>org.atlas</groupId>
     <artifactId>atlas-visualparadigm-adapter</artifactId>
     <packaging>jar</packaging>
-    <version>2.0</version>
+    <version>2.1-SNAPSHOT</version>
 
     <distributionManagement>
 	    <repository>
@@ -21,9 +21,9 @@
       </distributionManagement>
 
 	<scm>
-	    <connection>scm:svn:http://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/releases/atlas-visualparadigm-adapter-2.0</connection>
-	    <developerConnection>scm:svn:https://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/releases/atlas-visualparadigm-adapter-2.0</developerConnection>
-	    <url>http://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/releases/atlas-visualparadigm-adapter-2.0</url>
+	    <connection>scm:svn:http://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/trunk</connection>
+	    <developerConnection>scm:svn:https://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/trunk</developerConnection>
+	    <url>http://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/trunk</url>
 	  </scm> 
 	  
     <repositories>
@@ -68,18 +68,18 @@
         <dependency>
             <groupId>org.atlas</groupId>
             <artifactId>atlas-metamodel</artifactId>
-            <version>2.0</version>
+            <version>2.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.atlas</groupId>
             <artifactId>atlas-engine</artifactId>
-            <version>2.0</version>
+            <version>2.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.atlas</groupId>
             <artifactId>atlas-string-utils</artifactId>
-            <version>2.0</version>
+            <version>2.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
