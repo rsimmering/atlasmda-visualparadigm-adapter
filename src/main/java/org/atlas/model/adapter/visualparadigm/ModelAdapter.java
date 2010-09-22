@@ -55,7 +55,6 @@ public class ModelAdapter implements Adapter {
 
     public Model adapt(File file, Model inputModel) throws AdapterException {
         model = inputModel;
-
         parse(file);
         normalize();
 

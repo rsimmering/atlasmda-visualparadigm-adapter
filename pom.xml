@@ -11,18 +11,23 @@
     <version>2.0-SNAPSHOT</version>
 
     <distributionManagement>
-        <repository>
-          <id>atlas-releases</id>
-          <name>Releases</name>
-          <url>http://www.atlas-mda.org/repo/content/repositories/releases</url>
-        </repository>
+	    <repository>
+		  <id>atlas-releases</id>
+		  <url>http://www.atlas-mda.org/repo/content/repositories/releases</url>
+	    </repository>
         <snapshotRepository>
-            <id>atlas-snapshots</id>
-            <name>Snapshots</name>
-            <url>http://www.atlas-mda.org/repo/content/repositories/snapshots</url>
-            <uniqueVersion>false</uniqueVersion>
-          </snapshotRepository>
-    </distributionManagement>
+          <id>atlas-snapshots</id>
+          <url>http://www.atlas-mda.org/repo/content/repositories/snapshots</url>
+          <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+      </distributionManagement>
+
+	<scm>
+	    <connection>scm:svn:http://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/trunk</connection>
+	    <developerConnection>scm:svn:https://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/trunk</developerConnection>
+	    <url>http://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/trunk</url>
+	  </scm> 
+	  
     <repositories>
     <repository>
           <releases>
@@ -114,6 +119,16 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-release-plugin</artifactId>
+		        <version>2.0</version>
+		        <configuration>
+		          <tagBase>https://atlas-mda.googlecode.com/svn/adapters/atlas-visualparadigm-adapter/releases</tagBase>
+		          <goals>deploy</goals>
+		        </configuration>
+	      	</plugin>
         </plugins>
     </build>
 

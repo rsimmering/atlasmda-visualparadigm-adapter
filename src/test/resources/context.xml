@@ -1,13 +1,70 @@
 <context>
-    <inputs>
-        <model file="src/test/resources/project.xml" adapter="org.atlas.model.adapter.visualparadigm.ModelAdapter"/>
-        <templates dir="src/test/resources/templates" />
+    <properties>
+        <property name="generated.source.root" value="target/testoutput"/>
+        <property name="main.source.root" value="target/testoutput"/>
+        <property name="test.resource.root" value="src/test/resources"/>
+        <property name="namespace" value="Org.Atlas.School"/>
+    </properties>
+    <models>
+    	<model file="${test.resource.root}/project.xml" adapter="org.atlas.model.adapter.visualparadigm.ModelAdapter"/>
+    </models>
+    <primitives file="${test.resource.root}/primitives.xml"/>
+    <templates dir="${test.resource.root}/templates"/>
+    <utilities>
         <utility name="util" impl="org.atlas.utils.AtlasStringUtils"/>
-    </inputs>
-    <outputs>
-        <output name="generated.source.root" dir="target/generated-sources/java"/>
-        <output name="main.source.root" dir="target/generated-sources/java"/>
-        <output name="generated.resource.root" dir="target/generated-sources/resources"/>
-        <output name="main.resource.root" dir="target/generated-sources/resources"/>
-    </outputs>
+    </utilities>
+    <targets>
+	    <target name="entity.interfaces.impl.base"
+	            stereotype="entity"
+	            template="entity.base.interfaces.dotnet.vm"
+	            outputFile="I${name}.Base.cs"
+	            outputPath="${generated.source.root}/Api/Domain"
+	            overwrite="true">
+	    	<property name="namespace" value="${namespace}.Api.Domain"/>
+	    </target>
+	
+	    <target name="entity.interfaces.impl"
+	            stereotype="entity"
+	            template="entity.interfaces.dotnet.vm"
+	            outputFile="I${name}.cs"
+	            outputPath="${generated.source.root}/Api/Domain"
+	            overwrite="false">
+	    	<property name="namespace" value="${namespace}.Api.Domain"/>
+	   </target>
+	
+	    <target name="entity.base.nhibernate"
+	            stereotype="entity"
+	            template="entity.base.nhibernate.vm"
+	            outputFile="${name}.Base.cs"
+	            outputPath="${generated.source.root}/Domain"
+	            overwrite="true">
+	            <property name="namespace" value="${namespace}.Domain"/>
+	    </target>
+	
+	    <target name="entity.impl"
+	            stereotype="entity"
+	            template="entity.dotnet.vm"
+	            outputFile="${name}.cs"
+	            outputPath="${generated.source.root}/Domain"
+	            overwrite="false">
+	            <property name="namespace" value="${namespace}.Domain"/>
+	   </target>
+	
+	   <target name="spring.context.dao"
+	            stereotype="entity"
+	            collection="true"
+	            template="spring.context.dao.vm"
+	            outputFile="spring-context-dao.xml"
+	            outputPath="${generated.source.root}/conf"
+	            overwrite="true"/>
+	
+	   <target name="spring.context.service"
+	            stereotype="control"
+	            collection="true"
+	            template="spring.context.services.vm"
+	            outputFile="spring-context-services.xml"
+	            outputPath="${generated.source.root}/conf"
+	            overwrite="true">
+	   </target>
+    </targets>
 </context>
