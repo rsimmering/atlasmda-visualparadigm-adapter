@@ -5,6 +5,7 @@ public class VpParameter  extends VpTypedElement {
     private String type;
     private String id;
     private String direction;
+	private boolean many;
 
     public String getName() {
         return name;
@@ -13,6 +14,15 @@ public class VpParameter  extends VpTypedElement {
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean getMany() {
+		return many;
+	}
+
+	public void setMany(boolean many) {
+		this.many = many;
+    }
+
 
     public String getType() {
         return type;

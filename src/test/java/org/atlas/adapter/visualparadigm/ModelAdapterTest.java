@@ -1,20 +1,21 @@
 package org.atlas.adapter.visualparadigm;
 
+import org.atlas.engine.Context;
+import org.atlas.engine.ModelInput;
+import org.atlas.engine.ModelTransformer;
+import org.atlas.engine.TransformException;
+import org.atlas.model.adapter.AdapterException;
 import org.atlas.model.adapter.visualparadigm.ModelAdapter;
+import org.atlas.model.metamodel.Control;
+import org.atlas.model.metamodel.Entity;
+import org.atlas.model.metamodel.Enumeration;
+import org.atlas.model.metamodel.Literal;
+import org.atlas.model.metamodel.Model;
+import org.atlas.model.metamodel.Operation;
+import org.atlas.model.metamodel.Property;
+
 import java.io.File;
 import junit.framework.Assert;
-import org.atlas.mda.Context;
-import org.atlas.mda.ModelInput;
-import org.atlas.mda.ModelTransformer;
-import org.atlas.mda.TransformException;
-import org.atlas.mda.adapter.AdapterException;
-import org.atlas.metamodel.Control;
-import org.atlas.metamodel.Entity;
-import org.atlas.metamodel.Enumeration;
-import org.atlas.metamodel.Literal;
-import org.atlas.metamodel.Operation;
-import org.atlas.metamodel.Model;
-import org.atlas.metamodel.Property;
 import org.junit.Test;
 
 public class ModelAdapterTest {

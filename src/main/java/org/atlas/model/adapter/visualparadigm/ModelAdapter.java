@@ -3,9 +3,6 @@ package org.atlas.model.adapter.visualparadigm;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.atlas.mda.Stereotype;
-import org.atlas.metamodel.*;
-
 import com.ximpleware.AutoPilot;
 import com.ximpleware.NavException;
 import com.ximpleware.VTDGen;
@@ -16,14 +13,26 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.StringUtils;
+import org.atlas.engine.Stereotype;
+import org.atlas.model.adapter.Adapter;
+import org.atlas.model.adapter.AdapterException;
+import org.atlas.model.metamodel.Association;
+import org.atlas.model.metamodel.Boundary;
+import org.atlas.model.metamodel.Element;
+import org.atlas.model.metamodel.Literal;
+import org.atlas.model.metamodel.Control;
+import org.atlas.model.metamodel.Entity;
+import org.atlas.model.metamodel.Enumeration;
+import org.atlas.model.metamodel.Operation;
+import org.atlas.model.metamodel.Parameter;
+import org.atlas.model.metamodel.Model;
+import org.atlas.model.metamodel.Property;
+import org.atlas.model.metamodel.Tag;
 import org.atlas.model.adapter.visualparadigm.xml.VpAssociation;
 import org.atlas.model.adapter.visualparadigm.xml.VpAssociationEnd;
 import org.atlas.model.adapter.visualparadigm.xml.VpAttribute;
 import org.atlas.model.adapter.visualparadigm.xml.VpClass;
 import org.atlas.model.adapter.visualparadigm.xml.VpGeneralization;
-import org.atlas.mda.adapter.Adapter;
-import org.atlas.mda.adapter.AdapterException;
-import org.atlas.metamodel.Element;
 import org.atlas.model.adapter.visualparadigm.xml.VpElement;
 import org.atlas.model.adapter.visualparadigm.xml.VpOperation;
 import org.atlas.model.adapter.visualparadigm.xml.VpParameter;
@@ -53,8 +62,8 @@ public class ModelAdapter implements Adapter {
         associations = new ArrayList<VpAssociation>(15);
     }
 
-    public Model adapt(File file, Model inputModel) throws AdapterException {
-        model = inputModel;
+    public Model adapt(File file, Model model) throws AdapterException {
+        this.model = model;
         parse(file);
         normalize();
 
@@ -244,7 +253,13 @@ public class ModelAdapter implements Adapter {
                 parameter.setType(id);
                 vn.pop();
             }
-            if ("direction".equals(fieldName)) {
+            else if("typeModifier".equals(fieldName)){
+				String typeModifier = vn.toNormalizedString((vn.getAttrVal("value") != -1) ? vn.getAttrVal("value") : 0);
+				if("*".equals(typeModifier)){
+					parameter.setMany(true);
+				}
+			}
+            else if ("direction".equals(fieldName)) {
                 String directionValue = vn.toNormalizedString((vn.getAttrVal("value") != -1) ? vn.getAttrVal("value") : 0);
                 parameter.setDirection(directionValue);
             }
@@ -682,6 +697,7 @@ public class ModelAdapter implements Adapter {
                     if (ep != null) {
                         Parameter p = new Parameter();
                         p.setName(ep.getName());
+                        p.setMany(ep.getMany());
                         p.setType(resolveType(ep.getType()));
                         addTags(ep, p);
                         o.addParameter(p);
